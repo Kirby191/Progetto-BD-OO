@@ -23,3 +23,12 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 + Aggiunta entità __Autenticazione__ che ci gestisce gli eventuali accessi al nostro DB.
 + Aggiunta gerarchia a __Carriera__. Ora ha __Carriera Portiere__.
 + Aggiunto attributo _GoalSubiti_ a __Militanza__
+
+
+# Quarta Battuta UML
+![quarta bozza UML (1)](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/db54f612-db26-42ea-a5e7-cb15dc35df0d)
+
++ __Carriera__ _->_ __Militanza__
++ Cambiata la relazione tra Giocatore e Squadra. Non avrà più __Militanza__ ma si potrà ricavare dalla classe __Militanza__ utilizzando delle query e vincoli semantici.
++ Aggiunta relazione tra la nuova classe __Militanza__ e __Squadra__ per tenere traccia delle Militanze. 
++ Aggiunta Attributi a __Giocatore__, __Squadra__ e __Militanza__
