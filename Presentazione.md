@@ -26,8 +26,7 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 
 
 # Quarta Battuta UML
-![quarta bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/ed791fe4-cca5-4cc5-bed3-e9695325b4b3)
-
+![quarta bozza UML (2)](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/a457d171-3c1d-4cd0-a794-f6f81699b5ef)
 
 + __Carriera__ _->_ __Militanza__
 + Cambiata la relazione tra Giocatore e Squadra. Non avrà più __Militanza__ ma si potrà ricavare dalla classe __Militanza__ utilizzando delle query e vincoli semantici.
