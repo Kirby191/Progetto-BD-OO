@@ -32,3 +32,9 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 + Cambiata la relazione tra Giocatore e Squadra. Non avrà più __Militanza__ ma si potrà ricavare dalla classe __Militanza__ utilizzando delle query e vincoli semantici.
 + Aggiunta relazione tra la nuova classe __Militanza__ e __Squadra__ per tenere traccia delle Militanze. 
 + Aggiunta Attributi a __Giocatore__, __Squadra__ e __Militanza__
+
+# Quinta Battuta UML
+![Quinta bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/7987d76a-84ec-4175-9819-f00baad774d1)
+
++ Modificata visivamente la gerarchia di Giocatore
++ Aggiunto attributo _DataFine_ ad __Allenatore__ e __Dirigente__
