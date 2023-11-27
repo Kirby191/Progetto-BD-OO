@@ -38,3 +38,9 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 
 + Modificata visivamente la gerarchia di Giocatore
 + Aggiunto attributo _DataFine_ ad __Allenatore__ e __Dirigente__
+
+# Sesta Bozza UML
+![Sesta Bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/2faa4ff3-54e3-4bcc-83d1-a62f9c9f7021)
+
++ Abilità e Ruolo sono multivalore, pertanto sono [1...N]
++ Rimosso Feature come attributo composto.
