@@ -40,7 +40,9 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 + Aggiunto attributo _DataFine_ ad __Allenatore__ e __Dirigente__
 
 # Sesta Bozza UML
-![Sesta Bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/2faa4ff3-54e3-4bcc-83d1-a62f9c9f7021)
+![Sesta bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/721a56ff-0092-4150-88f0-970b4ebf286a)
+
+
 
 + Abilità e Ruolo sono multivalore, pertanto sono [1...N]
 + Rimosso Feature come attributo composto.
