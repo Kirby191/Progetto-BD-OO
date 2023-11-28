@@ -46,3 +46,9 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 
 + Abilità e Ruolo sono multivalore, pertanto sono [1...N]
 + Rimosso Feature come attributo composto.
+
+# Settima Bozza UML
+![settima bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/b133fec8-5287-425c-90fb-2362e32bc84d)
+
++ Aggiunti attributi di tipo Boolean a __Giocatore__ e __Trofeo__ che ci aiutano per risolvere alcuni problemi riscontrati.
++ Rimosso __Autenticazione__. Si fa nell'SQL.
