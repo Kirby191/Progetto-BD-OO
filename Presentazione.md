@@ -55,3 +55,4 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 + Aggiunti attributi di tipo Boolean a __Giocatore__ e __Trofeo__ che ci aiutano per risolvere alcuni problemi riscontrati.
 + Rimosso __Autenticazione__. Si fa nell'SQL.
 + Errore presente nella gerarchia di Giocatore. Era <Totale, Disgiunta>, non Parziale.
++ Dal portatile fare git pull
