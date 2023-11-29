@@ -13,3 +13,10 @@
 ### Gestione delle Gerarchie
 + Nel nostro UML ci sono due gerarchie:
 
+__- Giocatore__
++ Nella gerarchia di __Giocatore__ abbiamo deciso di accorpare le figlie nel padre. Altrimenti, avremmo avuto due entità pressochè identiche, risultando in una complessità dello schema elevata. Utilizzando un attributo tipo che indichi se Giocatore è un Portiere. In tal caso, __Militanza__ avrà l'obbligo di gestire i _Goal Subiti_. Dato che la gerarchia è di tipo <Totale, Disgiunta>, possiamo usufruire di un attributo di tipo boolean che mi dirà, se esso è _TRUE_, che Giocatore è un Portiere. _FALSE_ se esso è un GiocatoreDiMovimento
+  
+__- Militanza__
++ La Gerarchia di Militanza viene gestita equivalentemente a Giocatore per i motivi sopra citati. Accorpando il figlio nel padre diciamo che, se il Giocatore è un Portiere, l'attributo tipo sarà _TRUE_ e allora _Goal Subiti_ potrà essere inserito.
+
++ Tale strategia ha l'ovvio svantaggio di contenere molti attributi a NULL, ma ha un vantaggio relativo all'interrogazione del DB, in quanto non abbiamo bisogno di creare il doppio delle query per ottenere informazioni, ma ci basta effettuare controlli sugli attributi tipo.
