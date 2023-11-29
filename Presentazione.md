@@ -48,7 +48,8 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 + Rimosso Feature come attributo composto.
 
 # Settima Bozza UML
-![Settima bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/de791097-17b0-4491-ac0f-5cb66817d9f1)
+![Settima bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/b1dfcfa0-ea7d-4978-863e-a5094ac532c5)
+
 
 
 
