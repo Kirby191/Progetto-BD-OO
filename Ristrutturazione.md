@@ -1,5 +1,6 @@
 # Ristrutturazione
-![UML ristrutturato](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/2f3b4f37-31c7-4c30-a1d3-8be61ccd18c1)
+![UML ristrutturato](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/5a80f031-7fea-4d4a-8550-fc431525afe8)
+
 
 ### Analisi delle Ridondanze
 + Ridondanze Possibili di _Nome_, _Cognome_, _SSN_ di un __Giocatore__ in __Allenatore__ e __Dirigente__, queste ridondanze sono fondamentali perchè se un Giocatore diventa Allenatore o Dirigente ci colleghiamo alla classe Giocatore per ricordare parte delle sue informazioni in quanto la tupla che si riferiva a quel Giocatore non viene eliminata, ma viene impostato _Ritirato_ a __TRUE__
