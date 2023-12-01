@@ -1,4 +1,4 @@
-# Prima Ristrutturazione
+# Ristrutturazione
 ![UML ristrutturato](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/2f3b4f37-31c7-4c30-a1d3-8be61ccd18c1)
 
 ### Analisi delle Ridondanze
