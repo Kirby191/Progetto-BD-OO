@@ -57,3 +57,9 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 + Rimosso __Autenticazione__. Si fa nell'SQL.
 + Errore presente nella gerarchia di Giocatore. Era <Totale, Disgiunta>, non Parziale.
 + Dal portatile fare git pull
+
+# Ottava Bozza UML
+![Ottava bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/7dd7ead3-513c-43c1-a8e8-a9682f7af43e)
+
++ Cambiata relazione tra __Militanza__ e __Squadra__. N-N -> 1-N.
+
