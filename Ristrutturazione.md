@@ -1,5 +1,6 @@
 # Ristrutturazione
-![UML ristrutturato](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/5a80f031-7fea-4d4a-8550-fc431525afe8)
+![UML ristrutturato 2](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/01a37d0f-1dbe-43ef-9d69-af98ea8cad3e)
+
 
 
 ### Analisi delle Ridondanze
