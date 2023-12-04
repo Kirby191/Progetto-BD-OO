@@ -1,5 +1,6 @@
 # Ristrutturazione
-![UML ristrutturato 2](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/01a37d0f-1dbe-43ef-9d69-af98ea8cad3e)
+![UML ristrutturato nuovo](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/385c85f9-8a9c-4173-99af-e2c0eec2dd80)
+
 
 
 
@@ -25,8 +26,7 @@ __- Militanza__
 + Tale strategia ha l'ovvio svantaggio di contenere molti attributi a NULL, ma ha un vantaggio relativo all'interrogazione del DB, in quanto non abbiamo bisogno di creare il doppio delle query per ottenere informazioni, ma ci basta effettuare controlli sugli attributi tipo.
 
 ### Gestione delle Associazioni
-+ Un'associazione 1:1 presente in questo Class Diagram è quella tra __Squadra__ e __Allenatore__. Nonostante ciò, è stato deciso di mantenere la classe associativa tra le classi perchè abbiamo bisogno di specificare un'istanza di allenatore diversa per ogni squadra.
-+ Altro caso di associazioni 1:1 occorre tra __Giocatore__ e __Allenatore__/__Dirigente__. Tuttavia, accorpare tali classi nella classe __Giocatore__ porterebbe ad una risultante complessità in quanto è necessario risolvere le dipendenze in modo tale che il Class Diagram rimanga invariato nel suo significato semantico.
++ L'unico caso di associazioni 1:1 nel nostro Class Diagram ristrutturato occorre tra __Giocatore__ e __Allenatore__/__Dirigente__. Tuttavia, accorpare tali classi nella classe __Giocatore__ porterebbe ad una risultante complessità in quanto è necessario risolvere le dipendenze in modo tale che il Class Diagram rimanga invariato nel suo significato semantico.
 
 ### Identificazione chiavi primarie
 + Giocatore, Allenatore e Dirigente avranno _SSN_ come chiave primaria in quanto esso è univoco per ogni persona.
