@@ -63,3 +63,10 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 
 + Cambiata relazione tra __Militanza__ e __Squadra__. N-N -> 1-N.
 
+# Nona Bozza UML
+![Nona bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/04d9c91a-35c8-4da5-89a4-12b3b3d6173a)
+
++ Cambiate relazioni tra __Squadra__ e __Allenatore__ / __Dirigente__.
++ Allenatore - Squadra: _1:N_
++ Squadra - Dirigente: _N:N_
+
