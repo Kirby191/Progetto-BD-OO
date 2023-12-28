@@ -70,3 +70,7 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 + Allenatore - Squadra: _1:N_
 + Squadra - Dirigente: _N:N_
 
+# Decima Bozza UML
+![Decima bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/ec6b23d9-c297-495e-ad81-b443b221c380)
+
++ Aggiunta attributo _Sesso_ a Giocatore
