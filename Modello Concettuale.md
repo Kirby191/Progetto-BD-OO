@@ -76,3 +76,8 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 
 
 + Aggiunta attributo _Sesso_ a Giocatore, Allenatore e Dirigente
+
+# Undicesima Bozza UML
+![Undicesima bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/a757a8ff-ff7a-4494-9849-9ad45e285640)
+
++ Invertita cardinalità tra Giocatore e Militanza, era errata.
