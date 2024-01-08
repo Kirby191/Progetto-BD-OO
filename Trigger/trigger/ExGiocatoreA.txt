@@ -1,0 +1,23 @@
+CREATE TRIGGER ExGiocatoreA
+AFTER INSERT ON Allenatore
+FOR EACH ROW
+BEGIN
+	DECLARE
+	Controllo Allenatore.SSN%TYPE;
+	isRitirato Giocatore.Ritirato%TYPE;
+		BEGIN
+			SELECT SSN, Ritirato INTO Controllo, isRitirato
+			       FROM Giocatore
+			       WHERE SSN = NEW.SSN;
+
+			IF Controllo IS NOT NULL THEN
+
+				IF isRitirato = FALSE THEN
+					UPDATE Giocatore
+				     	       SET Ritirato = TRUE
+				      	       WHERE SSN = Controllo;
+				END IF;
+
+			END IF;
+		END;
+END;

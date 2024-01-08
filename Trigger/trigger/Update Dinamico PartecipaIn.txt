@@ -1,0 +1,183 @@
+CREATE TRIGGER DeletePInFromRetiredG
+AFTER UPDATE ON Giocatore
+WHEN Ritirato = TRUE
+FOR EACH ROW
+BEGIN
+	DECLARE
+		
+		BEGIN
+			DELETE
+			FROM Partecipa_in AS P
+			WHERE P.SSN = NEW.SSN
+			-- Posso farlo perchè Partecipa In viene aggiornata in tempo reale, quindi non avrò due SSN In diverse Squadre.
+		END;
+END;
+
+
+
+CREATE TRIGGER DeleteFromInsOnPIn
+AFTER INSERT ON PartecipaIn
+FOR EACH ROW
+BEGIN
+	DECLARE
+		Giocatori SYS_REFCURSOR;
+		sql_instr VARCHAR2(1000) := '
+			SELECT *
+		          FROM Militanza
+		          WHERE NomeSquadra = ? AND 
+				SSN = ?
+			  ORDER BY Data_Inizio DESC
+			  LIMIT 1);
+		BEGIN
+
+				OPEN Giocatori FOR EXECUTE sql_instr USING NEW.NomeSquadra, NEW.SSN;
+
+				-- Se la tupla non esiste in Militanza, allora si sta inserendo una tupla in PartecipaIn non corretta.
+
+					IF Giocatori%NotFound THEN
+						 RAISE EXCEPTION 'Giocatore non trovato per NomeSquadra = % e SSN = %', NEW.NomeSquadra, NEW.SSN;
+					END IF;
+
+					FETCH Giocatori INTO Giocatore
+						
+					IF Giocatore.Data_Fine IS NOT NULL THEN
+						RAISE EXCEPTION 'Il Giocatore ha terminato la sua militanza nella Squadra'
+					END IF
+						
+				CLOSE Giocatori;
+
+		END;
+END;
+
+
+CREATE TRIGGER UpdateMFromDelOnPIn
+BEFORE DELETE ON PartecipaIn
+FOR EACH ROW
+BEGIN
+	DECLARE
+
+		Giocatore SYS_REFCURSOR;
+		sql_instr VARCHAR2(1000) := '
+			SELECT *
+		          FROM Militanza
+		          WHERE NomeSquadra = ? AND 
+				SSN = ?
+			  ORDER BY Data_Inizio DESC
+			  LIMIT 1);
+		tmp Militanza%ROWTYPE;
+
+		BEGIN
+
+				OPEN Giocatore FOR EXECUTE sql_instr USING OLD.NomeSquadra, OLD.SSN;
+					IF Giocatore%NotFound THEN
+						RAISE EXCEPTION 'Militanza non trovata!';
+					END IF;
+					FETCH Giocatore INTO tmp
+						IF tmp.Data_Fine IS NULL THEN
+							UPDATE Militanza
+							SET Data_Fine = CURRENT_DATE
+							WHERE ID_Militanza = tmp.ID_Militanza;
+						END IF;
+				CLOSE Giocatore;
+
+		END;
+END;
+
+CREATE TRIGGER NoChangesUpdatePIn
+BEFORE UPDATE ON Partecipa In
+FOR EACH ROW
+BEGIN
+	DECLARE
+		BEGIN
+
+			IF NEW.SSN <> OLD.SSN OR NEW.NomeSquadra <> OLD.NomeSquadra
+
+				RAISE EXCEPTION 'Non è possibile modificare i valori inseriti'			
+
+			END IF
+
+		END;
+END;
+
+
+
+CREATE TRIGGER InsertPInFromInsOnM
+BEFORE INSERT ON Militanza
+FOR EACH ROW
+BEGIN
+	DECLARE
+		Check GIOCATORE.Ritirato%TYPE;
+		BEGIN
+			SELECT Ritirato INTO Check
+				FROM Giocatore
+				WHERE SSN = NEW.SSN
+		
+			IF CHECK IS TRUE THEN
+		
+				RAISE EXCEPTION 'Il Giocatore è ritirato, impossibile inserire la Militanza'
+
+			END IF;
+
+			INSERT INTO Partecipa_In
+			       SELECT NomeSquadra, SSN
+				      FROM Militanza
+				      WHERE NomeSquadra = New.NomeSquadra AND SSN = NEW.SSN;
+
+		END;
+END;
+
+
+
+CREATE TRIGGER DeletePInFromUpdateOnM
+AFTER UPDATE ON Militanza
+FOR EACH ROW
+BEGIN
+	DECLARE
+		BEGIN
+
+			IF NEW.NomeSquadra <> OLD.NomeSquadra OR NEW.SSN <> OLD.SSN THEN
+
+				RAISE EXCEPTION 'Impossibile eseguire la richiesta. Inserire una nuova riga con i dati corretti per il giocatore';		
+
+			END IF;
+
+			IF NEW.Data_FINE IS NULL AND OLD.Data_Fine IS NOT NULL THEN
+
+				RAISE EXCEPTION 'Non è possibile annullare la fine di una militanza una volta inserita';
+
+			END IF;
+
+			IF NEW.Data_Fine IS NOT NULL THEN
+
+				DELETE 
+				 FROM PartecipaIn as P 
+				 WHERE P.SSN = NEW.SSN AND P.NomeSquadra = NEW.NomeSquadra;
+
+			END IF;
+
+		END;
+END;
+
+CREATE TRIGGER DeletePInFromUpdateOnM
+BEFORE DELETE ON Militanza
+FOR EACH ROW
+BEGIN
+	DECLARE
+		Check GIOCATORE.SSN%TYPE;
+		BEGIN
+			SELECT SSN INTO Check
+			FROM Partecipa In AS P
+			WHERE P.SSN = OLD.SSN AND P.NomeSquadra = OLD.NomeSquadra;
+			
+			IF Check IS NOT NULL THEN
+
+				DELETE 
+				 FROM PartecipaIn as P 
+				 WHERE P.SSN = NEW.SSN AND P.NomeSquadra = NEW.NomeSquadra;
+
+			END IF;
+			
+		END;
+END;
+
+
