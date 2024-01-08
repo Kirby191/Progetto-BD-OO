@@ -1,0 +1,29 @@
+CREATE OR REPLACE FUNCTION Curr_GiocatoriFromS(Squadra SQUADRA.Nome_Squadra%TYPE)
+RETURNS TABLE(SSN_Giocatore GIOCATORE.SSN%TYPE)
+AS $$
+	DECLARE
+	Cursor Giocatori IS(
+	SELECT SSN
+	FROM Partecipa In
+	WHERE NomeSquadra = Squadra);
+	Curr_Giocatore GIOCATORE.SSN%TYPE;
+	final_string TEXT;
+	
+		BEGIN
+			OPEN Giocatori;
+	
+			LOOP
+	
+				FETCH Giocatori INTO Curr_Giocatore;		
+				EXIT WHEN Giocatori%NotFound;
+				
+				final_string := final_string || Curr_Giocatore || ' ';
+				
+			END LOOP;
+			
+			CLOSE Giocatori;
+			
+			RETURN QUERY SELECT * FROM string_to_table(final_string, ' ');
+			
+		END;
+$$ Language plpgsql
