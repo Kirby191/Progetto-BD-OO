@@ -6,6 +6,7 @@ AS $$
 	SELECT SSN
 	FROM Partecipa In
 	WHERE NomeSquadra = Squadra);
+	
 	Curr_Giocatore GIOCATORE.SSN%TYPE;
 	final_string TEXT;
 	
