@@ -1,0 +1,38 @@
+CREATE TRIGGER CheckSexPInG
+AFTER INSERT ON Partecipa In
+FOR EACH ROW
+BEGIN
+	DECLARE
+		controllo CURSOR IS(
+			SELECT SSN
+			FROM Partecipa In
+			WHERE NomeSquadra = NEW.NomeSquadra);
+
+		SSN_Check Giocatore.SSN%TYPE;
+		BEGIN
+
+			OPEN controllo;
+
+			SELECT Sesso INTO Check
+			       FROM Giocatore
+			       WHERE SSN = NEW.SSN;
+
+			LOOP
+				FETCH controllo INTO SSN_Check;
+				
+				EXIT WHEN controllo%NotFound;
+				
+				SELECT Sesso INTO Check2
+				       FROM Giocatore
+				       WHERE SSN = SSN_CHECK;
+
+				IF Check <> Check2 THEN
+					RAISE EXCEPTION 'Il sesso del giocatore non è corretto'
+				END IF;
+
+			END LOOP;
+
+			CLOSE controllo;
+
+		END;
+END;
