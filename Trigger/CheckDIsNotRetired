@@ -1,0 +1,19 @@
+CREATE TRIGGER CheckDIsNotRetired
+BEFORE INSERT ON Dirige
+FOR EACH ROW
+BEGIN
+	DECLARE
+	Controllo DIRIGENTE.SSN%TYPE;
+		BEGIN
+			SELECT FineD INTO Controllo
+			FROM Dirigente
+			WHERE SSN = NEW.SSN_Dirigente;
+			
+			IF FineD IS NOT NULL THEN
+			
+				RAISE EXCEPTION 'Il Dirigente inserito si è ritirato';
+			
+			END IF;
+		END;
+
+END;
