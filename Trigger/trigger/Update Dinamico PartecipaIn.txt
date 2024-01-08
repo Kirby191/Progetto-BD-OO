@@ -6,10 +6,9 @@ BEGIN
 	DECLARE
 		
 		BEGIN
-			DELETE
-			FROM Partecipa_in AS P
-			WHERE P.SSN = NEW.SSN
-			-- Posso farlo perchè Partecipa In viene aggiornata in tempo reale, quindi non avrò due SSN In diverse Squadre.
+			UPDATE Militanza
+			SET Data_Fine = CURRENT_DATE
+			WHERE SSN = NEW.SSN AND Data_Fine IS NULL; 
 		END;
 END;
 
@@ -106,6 +105,12 @@ BEFORE INSERT ON Militanza
 FOR EACH ROW
 BEGIN
 	DECLARE
+		Cursor NoDouble IS(
+			SELECT Data_Fine
+			FROM Militanza
+			WHERE SSN = NEW.SSN AND Data_Fine <> NEW.Data_Fine);
+			
+		Controllo MILITANZA.Data_Fine%TYPE;	
 		Check GIOCATORE.Ritirato%TYPE;
 		BEGIN
 			SELECT Ritirato INTO Check
@@ -117,12 +122,29 @@ BEGIN
 				RAISE EXCEPTION 'Il Giocatore è ritirato, impossibile inserire la Militanza'
 
 			END IF;
-
-			INSERT INTO Partecipa_In
-			       SELECT NomeSquadra, SSN
-				      FROM Militanza
-				      WHERE NomeSquadra = New.NomeSquadra AND SSN = NEW.SSN;
-
+			
+			IF NEW.Data_Fine IS NULL THEN
+				OPEN NoDouble;			
+			
+				LOOP
+					FETCH NoDouble INTO Controllo;
+					EXIT WHEN NoDouble%NotFound;
+					IF Controllo IS NULL THEN
+					
+						RAISE EXCEPTION 'Militanza già in corso per il giocatore che è stato inserito.';
+					
+					END IF;
+				
+				END LOOP;
+				
+				
+				CLOSE NoDouble;
+				INSERT INTO Partecipa_In
+				       SELECT NomeSquadra, SSN
+					      FROM Militanza
+					      WHERE NomeSquadra = New.NomeSquadra AND SSN = NEW.SSN;
+			
+			END IF;
 		END;
 END;
 
