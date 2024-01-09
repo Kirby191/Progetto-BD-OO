@@ -130,7 +130,7 @@ BEGIN
 					FETCH NoDouble INTO Controllo;
 					EXIT WHEN NoDouble%NotFound;
 					IF Controllo IS NULL THEN
-					
+						-- Discutere come approcciare il problema, Originariamente si faceva un cambio di Data_Fine del prex a CURR_DATE
 						RAISE EXCEPTION 'Militanza già in corso per il giocatore che è stato inserito.';
 					
 					END IF;
