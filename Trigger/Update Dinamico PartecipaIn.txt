@@ -139,10 +139,7 @@ BEGIN
 				
 				
 				CLOSE NoDouble;
-				INSERT INTO Partecipa_In
-				       SELECT NomeSquadra, SSN
-					      FROM Militanza
-					      WHERE NomeSquadra = New.NomeSquadra AND SSN = NEW.SSN;
+				INSERT INTO Partecipa_In VALUES(NEW.SSN, NEW.NomeSquadra)
 			
 			END IF;
 		END;
