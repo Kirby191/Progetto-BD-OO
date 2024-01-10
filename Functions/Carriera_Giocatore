@@ -13,7 +13,7 @@ AS $$
 			
 			OPEN Carriera;
 			
-			CREATE OR REPLACE TABLE Carr(Inizio Date, Fine Date, Partite_Giocate INTEGER, Goal_Segnati INTEGER, Goal_Subiti INTEGER, Cartellini_Gialli INTEGER, Cartellini_Rossi INTEGER, Assist INTEGER);
+			CREATE OR REPLACE --TEMPORARY-- TABLE Carr(Inizio Date, Fine Date, Partite_Giocate INTEGER, Goal_Segnati INTEGER, Goal_Subiti INTEGER, Cartellini_Gialli INTEGER, Cartellini_Rossi INTEGER, Assist INTEGER);
 			
 			LOOP
 				FETCH Carriera INTO Militanza;
