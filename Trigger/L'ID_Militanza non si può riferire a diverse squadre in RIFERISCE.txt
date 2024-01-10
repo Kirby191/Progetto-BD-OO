@@ -1,0 +1,6 @@
+L'ID_Militanza non si può riferire a due squadre diverse in Riferisce
+
+ALTER TABLE RIFERISCE 
+ADD CONSTRAINT id_militanza_singola_squadra UNIQUE (ID_Militanza);
+
+/*Mettendo che ID_Militanza deve essere un valore unico diciamo che in Riferisce non avremo mai due tuple con la stessa militanza quindi avremo ad ogni militanza associata automaticamente una sola squadra*/
