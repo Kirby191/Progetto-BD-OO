@@ -1,0 +1,68 @@
+CREATE TRIGGER InsVFromOda(
+AFTER INSERT ON Ottenuto Da
+FOR EACH ROW
+BEGIN
+	DECLARE
+	Controllo TROFEO.Squadra%TYPE;
+	CURSOR Giocatore IS(
+	SELECT SSN
+	FROM Partecipa_In
+	WHERE NomeSquadra = NEW.NomeSquadra);
+	Scorr Giocatore.SSN%TYPE;
+	
+		BEGIN
+			SELECT Squadra INTO Controllo
+			FROM TROFEO
+			WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno;
+			
+			IF Controllo IS NULL THEN
+			
+				RAISE EXCEPTION 'Il trofeo non è di squadra, impossibile inserire';
+			
+			END IF;
+			
+			OPEN Giocatore;
+			
+			LOOP
+				FETCH Giocatore INTO Scorr;
+				EXIT WHEN Giocatore%NotFound;
+				
+				INSERT INTO Vincere VALUES(Scorr, NEW.NomeTrofeo, NEW.Anno);
+			END LOOP;
+			
+			CLOSE Giocatore;
+		END;
+	
+END;
+
+CREATE TRIGGER CheckInsV(
+BEFORE INSERT ON Vincere
+FOR EACH ROW
+BEGIN
+	DECLARE
+	Controllo VINCERE.NomeSquadra%TYPE;
+	isSquadra TROFEO.Squadra%TYPE;
+		BEGIN			
+		
+			SELECT Squadra INTO isSquadra
+			FROM Trofeo
+			WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno;
+			
+			IF isSquadra IS TRUE THEN 
+			
+				SELECT NomeSquadra INTO Controllo
+				FROM Ottenuto Da
+				WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno;
+
+				IF Controllo IS NULL THEN
+
+					RAISE EXCEPTION 'Il Trofeo è di squadra. Impossibile assegnarlo al singolo giocatore';
+
+				END IF;
+
+			END IF;
+
+		END;
+
+END;
+)

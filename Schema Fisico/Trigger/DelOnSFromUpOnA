@@ -1,0 +1,28 @@
+CREATE TRIGGER DelOnSFromUpOnA
+AFTER UPDATE ON Allenatore
+WHEN FineA IS NOT NULL
+FOR EACH ROW
+BEGIN
+	DECLARE
+	Cursor Controllo IS(
+		SELECT Nome_Squadra
+		FROM Squadra);
+	Check SQUADRA.Nome_Squadra%TYPE;
+		BEGIN
+			OPEN Controllo;
+			
+			LOOP
+
+				FETCH Controllo INTO Check;
+				EXIT WHEN Controllo%NotFound;
+
+				UPDATE Squadra
+				SET SSN_Allenatore = NULL
+				WHERE NomeSquadra = Check AND SSN_Allenatore = NEW.SSN;
+
+			END LOOP;
+
+		CLOSE Controllo;
+		END;
+
+END;

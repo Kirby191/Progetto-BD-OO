@@ -1,0 +1,8 @@
+CREATE DOMAIN calcio.eta_valida AS DATE CHECK (DataDiNascita <= CURRENT_DATE - INTERVAL '16 years');
+
+CREATE DOMAIN calcio.ssn_valido AS VARCHAR(11) CHECK (VALUE SIMILAR TO '^[0-9]{3}-[0-9]{3}-[0-9]{3}$');
+
+CREATE DOMAIN calcio.RuoloType AS VARCHAR(30) CHECK (VALUE IN ('Portiere', 'Difensore centrale', 'Terzino sinistro', 'Terzino destro', 'Centrocampista difensivo', 'Centrocampista centrale', 'Esterno sinistro', 'Esterno destro', 'Centrocampista offensivo', 'Ala sinistra', 'Ala destra', 'Trequartista', 'Punta'));
+
+CREATE DOMAIN calcio.intero_non_negativo AS INTEGER CHECK (VALUE >= 0);
+CREATE DOMAIN calcio.non_negativo AS NUMERIC CHECK (VALUE >= 0.0);

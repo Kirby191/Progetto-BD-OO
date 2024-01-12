@@ -1,0 +1,34 @@
+CREATE OR REPLACE FUNCTION Carriera_Giocatore(SSN_Giocatore GIOCATORE.SSN%TYPE)
+RETURNS TABLE(Inizio Date, Fine Date, Partite_Giocate INTEGER, Goal_Segnati INTEGER, Goal_Subiti INTEGER, Cartellini_Gialli INTEGER, Cartellini_Rossi INTEGER, Assist INTEGER)
+AS $$
+	DECLARE
+	Cursor Carriera IS(
+	SELECT ID_Militanza
+	FROM Militanza
+	WHERE SSN = SSN_Giocatore
+	ORDER BY Data_Inizio ASC
+	);
+	Militanza MILITANZA.ID_Militanza%TYPE;
+		BEGIN
+			
+			OPEN Carriera;
+			
+			CREATE OR REPLACE --TEMPORARY-- TABLE Carr(Inizio Date, Fine Date, Partite_Giocate INTEGER, Goal_Segnati INTEGER, Goal_Subiti INTEGER, Cartellini_Gialli INTEGER, Cartellini_Rossi INTEGER, Assist INTEGER);
+			
+			LOOP
+				FETCH Carriera INTO Militanza;
+				EXIT WHEN Carriera%NotFound;
+				
+				-- Vanno specificati tutti gli attributi
+				INSERT INTO Carr VALUES(
+				SELECT *\ID_Militanza, NomeSquadra, SSN, TipoMilitanza
+				FROM Militanza
+				WHERE ID_Militanza = Militanza);
+			
+			END LOOP;
+			
+			CLOSE Carriera;	
+			
+			RETURN Carr;
+		END;
+$$ Language plpgsql

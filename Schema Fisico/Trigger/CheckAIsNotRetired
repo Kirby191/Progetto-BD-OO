@@ -1,0 +1,42 @@
+CREATE TRIGGER CheckAIsNotRetiredBeforeInsert
+BEFORE INSERT ON Squadra
+FOR EACH ROW
+BEGIN
+	DECLARE
+	Controllo ALLENATORE.FineA%TYPE;
+		BEGIN
+		
+			SELECT FineA INTO Controllo
+			FROM Allenatore
+			WHERE SSN = NEW.SSN_Allenatore;
+
+			IF FineA IS NOT NULL THEN
+
+				RAISE EXCEPTION 'Allenatore inserito ha terminato la sua carriera, non può allenare la squadra';
+
+			END IF;
+			
+		END;
+END;
+
+CREATE TRIGGER CheckAIsNotRetiredBeforeUpdate
+BEFORE UPDATE ON Squadra
+WHEN NEW.SSN_Allenatore <> OLD.SSN_Allenatore
+FOR EACH ROW
+BEGIN
+	DECLARE
+	Controllo ALLENATORE.FineA%TYPE;
+		BEGIN
+			SELECT FineA INTO Controllo
+			FROM Allenatore
+			WHERE SSN = NEW.SSN_Allenatore;
+
+			IF FineA IS NOT NULL THEN
+
+				RAISE EXCEPTION 'Allenatore inserito ha terminato la sua carriera, non può allenare la squadra';
+
+			END IF;
+		
+		END;
+
+END;
