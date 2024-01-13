@@ -6,3 +6,11 @@ CREATE DOMAIN calcio.RuoloType AS VARCHAR(30) CHECK (VALUE IN ('Portiere', 'Dife
 
 CREATE DOMAIN calcio.intero_non_negativo AS INTEGER CHECK (VALUE >= 0);
 CREATE DOMAIN calcio.non_negativo AS NUMERIC CHECK (VALUE >= 0.0);
+CREATE DOMAIN calcio.sesso_corretto AS CHAR CHECK (VALUE = 'F' OR VALUE = 'M');
+
+CREATE DOMAIN calcio.ruoloDirigente AS VARCHAR(30)
+  CHECK(VALUE IN ('Presidente', 'Amministratore delegato', 'Dirigente sportivo', 
+                  'Dirigente tecnico', 'Preparatore atletico', 'Preparatore dei portieri',
+                  'Medico sportivo', 'Mental coach', 'Fisioterapista', 'Osservatore', 
+                  'Magazziniere') OR VALUE IS NULL);
+

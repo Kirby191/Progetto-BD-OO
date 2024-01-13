@@ -1,10 +1,14 @@
+CREATE TABLE calcio.Nazione(
+Nome VARCHAR(50),
+PRIMARY KEY (Nome));
+
 CREATE TABLE calcio.Giocatore (
 Nome VARCHAR(50) NOT NULL,
 Cognome VARCHAR(50) NOT NULL,
 SSN calcio.ssn_valido NOT NULL,
-Nazionalità VARCHAR(50) NOT NULL,
+Nazionalità VARCHAR(50) REFERENCES calcio.Nazione(Nome) NOT NULL,
 DataDiNascita DATE NOT NULL,
-Sesso CHARACTER(1) NOT NULL,
+Sesso calcio.sesso_corretto NOT NULL,
 Piede CHARACTER(1) NOT NULL,
 Altezza NUMERIC(3,2) NOT NULL,
 Peso NUMERIC(4,2) NOT NULL,
@@ -17,7 +21,6 @@ PRIMARY KEY (SSN),
 
 CONSTRAINT AltezzaCorretta CHECK(Altezza > 1.50),
 CONSTRAINT PesoCorretto CHECK(Peso > 40.00),
-CONSTRAINT SessoCorretto CHECK(Sesso = 'M' or Sesso = 'F'),
 CONSTRAINT PiedeCorretto CHECK(Sesso = 'D' or Sesso = 'S'),
 CONSTRAINT TipoGiocatoreCorretto CHECK(TipoGiocatore= 'M' or TipoGiocatore= 'P')
 );
@@ -39,57 +42,74 @@ PRIMARY KEY (ID_Militanza),
 
 CONSTRAINT TipoMilitanzaorretto CHECK(TipoMilitanza ='M' or TipoMilitanza ='P'));
 
-CREATE TABLE Squadra(
-NomeSquadra CHARACTER VARYING(50) NOT NULL,
-Nazionalità CHARACTER VARYING(50) NOT NULL,
+CREATE TABLE calcio.Squadra(
+Nome_Squadra VARCHAR(50) UNIQUE NOT NULL,
+Nazionalità VARCHAR(50) REFERENCES calcio.Nazione(Nome) NOT NULL,
 Data_Fondazione DATE NOT NULL,
 
-CONSTRAINT Squadra_pkey PRIMARY KEY ("NomeSquadra,DataFondazione"),
-COSTRAINT ”unique_NomeSquadra” UNIQUE (“NomeSquadra”),
+PRIMARY KEY (Nome_Squadra));
 
-CREATE TABLE Trofeo(
-NomeTrofeo CHARACTER VARYING(30) NOT NULL,
+CREATE TABLE calcio.Trofeo(
+NomeTrofeo VARCHAR(30) NOT NULL,
 Anno DATE NOT NULL,
-Squadra CHARACTER(1) NOT NULL,
+Squadra BOOLEAN NOT NULL,
 
-CONSTRAINT Trofeo_pkey PRIMARY KEY (Trofeo),
+PRIMARY KEY (NomeTrofeo, Anno));
 
-CONSTRAINT SquadraCorretto CHECK(Squadra='Y' or Squadra='N')
-
-CREATE TABLE Allenatore(
-Nome CHARACTER VARYING(50) NOT NULL,
-Cognome CHARACTER VARYING(50) NOT NULL,
-Sesso CHARACTER(1) NOT NULL,
-SSN CHARACTER(16) NOT NULL,
+CREATE TABLE calcio.Allenatore(
+Nome VARCHAR(50) NOT NULL,
+Cognome VARCHAR(50) NOT NULL,
+Sesso calcio.sesso_corretto NOT NULL,
+SSN calcio.ssn_valido NOT NULL,
 InizioA DATE NOT NULL,
 FineA DATE,
 
-CONSTRAINT Allenatore_pkey PRIMARY KEY (SSN),
+PRIMARY KEY (SSN),
 
-CONSTRAINT SuperSSN FOREIGN kEY (SSN) REFERENCE Giocatore (SSN)
-ON UPDATE CASCADE
-ON DELETE CASCADE 
+CONSTRAINT SuperSSN FOREIGN KEY (SSN) REFERENCES Giocatore(SSN)
+ON UPDATE RESTRICT
+ON DELETE RESTRICT);
 
-CREATE TABLE Dirigente(
-Nome CHARACTER VARYING(50) NOT NULL,
-Cognome CHARACTER VARYING(50) NOT NULL,
-Sesso CHARACTER(1) NOT NULL,
-SSN CHARACTER(16) NOT NULL,
-RuoloDirigente CHARACTER VARYING(30) NOT NULL,
+CREATE TABLE calcio.Dirigente(
+Nome VARCHAR(50) NOT NULL,
+Cognome VARCHAR(50) NOT NULL,
+Sesso calcio.sesso_corretto NOT NULL,
+SSN calcio.ssn_valido NOT NULL,
+RuoloDirigente calcio.ruoloDirigente NOT NULL,
 InizioD DATE NOT NULL,
 FineD DATE,
 
-CREATE DOMAIN calcio.RuoloDirigente AS VARCHAR(30) CHECK(Presidente OR 
-Amministratore delegato OR Dirigente sportivo OR Dirigente tecnico OR Preparatore atletico              
-OR Preparatore dei portieri OR Medico sportivo OR Mental coach OR Fisioterapista
-OR Osservatore OR Magazziniere) DEFAULT 'sconosciuto' NOT NULL,
-
-Dirigente_pkey PRIMARY KEY (SSN),
+PRIMARY KEY (SSN),
 
 CONSTRAINT SuperSSN FOREIGN kEY (SSN) REFERENCES Giocatore (SSN)
-ON UPDATE CASCADE
-ON DELETE CASCADE 
+ON UPDATE RESTRICT
+ON DELETE RESTRICT);
 
+CREATE TABLE calcio.Riferisce(
+ID_Militanza SERIAL REFERENCES calcio.Militanza(ID_Militanza) UNIQUE NOT NULL,
+NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
+
+CREATE TABLE calcio.Vincere (
+    SSN calcio.ssn_valido REFERENCES calcio.Giocatore(SSN) NOT NULL,
+    NomeTrofeo VARCHAR(30) NOT NULL,
+    Anno DATE NOT NULL,
+	
+    CONSTRAINT TrofeoFK FOREIGN KEY (NomeTrofeo, Anno) REFERENCES Trofeo(NomeTrofeo, Anno));
+
+CREATE TABLE calcio.Partecipa_In(
+SSN calcio.ssn_valido NOT NULL,
+NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
+
+CREATE TABLE calcio.Ottenuto_Da(
+NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL,
+    NomeTrofeo VARCHAR(30) NOT NULL,
+    Anno DATE NOT NULL,
+	
+    CONSTRAINT TrofeoFK FOREIGN KEY (NomeTrofeo, Anno) REFERENCES Trofeo(NomeTrofeo, Anno));
+
+CREATE TABLE calcio.Dirige(
+SSN_Dirigente calcio.ssn_valido REFERENCES calcio.Dirigente(SSN) NOT NULL,
+NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
 
 
 
