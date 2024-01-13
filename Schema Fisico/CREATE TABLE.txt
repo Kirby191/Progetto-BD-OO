@@ -21,7 +21,7 @@ PRIMARY KEY (SSN),
 
 CONSTRAINT AltezzaCorretta CHECK(Altezza > 1.50),
 CONSTRAINT PesoCorretto CHECK(Peso > 40.00),
-CONSTRAINT PiedeCorretto CHECK(Sesso = 'D' or Sesso = 'S'),
+CONSTRAINT PiedeCorretto CHECK(Piede = 'D' or Piede = 'S'),
 CONSTRAINT TipoGiocatoreCorretto CHECK(TipoGiocatore= 'M' or TipoGiocatore= 'P')
 );
 
@@ -79,11 +79,7 @@ RuoloDirigente calcio.ruoloDirigente NOT NULL,
 InizioD DATE NOT NULL,
 FineD DATE,
 
-PRIMARY KEY (SSN),
-
-CONSTRAINT SuperSSN FOREIGN kEY (SSN) REFERENCES Giocatore (SSN)
-ON UPDATE RESTRICT
-ON DELETE RESTRICT);
+PRIMARY KEY (SSN));
 
 CREATE TABLE calcio.Riferisce(
 ID_Militanza SERIAL REFERENCES calcio.Militanza(ID_Militanza) UNIQUE NOT NULL,
