@@ -5,14 +5,14 @@ PRIMARY KEY (Nome));
 CREATE TABLE Giocatore (
 Nome VARCHAR(50) NOT NULL,
 Cognome VARCHAR(50) NOT NULL,
-SSN calcio.ssn_valido NOT NULL,
-Nazionalità VARCHAR(50) REFERENCES calcio.Nazione(Nome) NOT NULL,
+SSN ssn_valido NOT NULL,
+Nazionalità VARCHAR(50) REFERENCES Nazione(Nome) NOT NULL,
 DataDiNascita DATE NOT NULL,
-Sesso calcio.sesso_corretto NOT NULL,
+Sesso sesso_corretto NOT NULL,
 Piede CHARACTER(1) NOT NULL,
 Altezza NUMERIC(3,2) NOT NULL,
 Peso NUMERIC(4,2) NOT NULL,
-Ruoli calcio.RuoloType NOT NULL,
+Ruoli RuoloType NOT NULL,
 Ritirato BOOLEAN NOT NULL,
 Abilità VARCHAR(50) NOT NULL,
 TipoGiocatore CHARACTER(1) NOT NULL,
@@ -30,12 +30,12 @@ CREATE TABLE Militanza(
 ID_Militanza SERIAL NOT NULL,
 Data_Inizio DATE NOT NULL,
 Data_Fine DATE,
-PartiteGiocate calcio.intero_non_negativo NOT NULL,
-GoalSegnati calcio.intero_non_negativo NOT NULL,
-GoalSubiti calcio.intero_non_negativo NOT NULL,
-CartelliniGialli calcio.intero_non_negativo NOT NULL,
-CartelliniRossi calcio.intero_non_negativo NOT NULL,
-Assist calcio.intero_non_negativo NOT NULL,
+PartiteGiocate intero_non_negativo NOT NULL,
+GoalSegnati intero_non_negativo NOT NULL,
+GoalSubiti intero_non_negativo NOT NULL,
+CartelliniGialli intero_non_negativo NOT NULL,
+CartelliniRossi intero_non_negativo NOT NULL,
+Assist intero_non_negativo NOT NULL,
 TipoMilitanza CHAR(1) NOT NULL,
 
 PRIMARY KEY (ID_Militanza),
@@ -44,7 +44,7 @@ CONSTRAINT TipoMilitanzaorretto CHECK(TipoMilitanza ='M' or TipoMilitanza ='P'))
 
 CREATE TABLE Squadra(
 Nome_Squadra VARCHAR(50) UNIQUE NOT NULL,
-Nazionalità VARCHAR(50) REFERENCES calcio.Nazione(Nome) NOT NULL,
+Nazionalità VARCHAR(50) REFERENCES Nazione(Nome) NOT NULL,
 Data_Fondazione DATE NOT NULL,
 
 PRIMARY KEY (Nome_Squadra));
@@ -59,8 +59,8 @@ PRIMARY KEY (NomeTrofeo, Anno));
 CREATE TABLE Allenatore(
 Nome VARCHAR(50) NOT NULL,
 Cognome VARCHAR(50) NOT NULL,
-Sesso calcio.sesso_corretto NOT NULL,
-SSN calcio.ssn_valido NOT NULL,
+Sesso sesso_corretto NOT NULL,
+SSN ssn_valido NOT NULL,
 InizioA DATE NOT NULL,
 FineA DATE,
 
@@ -73,36 +73,36 @@ ON DELETE RESTRICT);
 CREATE TABLE Dirigente(
 Nome VARCHAR(50) NOT NULL,
 Cognome VARCHAR(50) NOT NULL,
-Sesso calcio.sesso_corretto NOT NULL,
-SSN calcio.ssn_valido NOT NULL,
-RuoloDirigente calcio.ruoloDirigente NOT NULL,
+Sesso sesso_corretto NOT NULL,
+SSN ssn_valido NOT NULL,
+RuoloDirigente ruoloDirigente NOT NULL,
 InizioD DATE NOT NULL,
 FineD DATE,
 
 PRIMARY KEY (SSN));
 
 CREATE TABLE Riferisce(
-ID_Militanza SERIAL REFERENCES calcio.Militanza(ID_Militanza) UNIQUE NOT NULL,
-NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
+ID_Militanza SERIAL REFERENCES Militanza(ID_Militanza) UNIQUE NOT NULL,
+NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL);
 
 CREATE TABLE Vincere (
-    SSN calcio.ssn_valido REFERENCES calcio.Giocatore(SSN) NOT NULL,
+    SSN ssn_valido REFERENCES Giocatore(SSN) NOT NULL,
     NomeTrofeo VARCHAR(30) NOT NULL,
     Anno DATE NOT NULL,
 	
     CONSTRAINT TrofeoFK FOREIGN KEY (NomeTrofeo, Anno) REFERENCES Trofeo(NomeTrofeo, Anno));
 
 CREATE TABLE Partecipa_In(
-SSN calcio.ssn_valido NOT NULL,
-NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
+SSN ssn_valido NOT NULL,
+NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL);
 
 CREATE TABLE Ottenuto_Da(
-NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL,
+NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL,
     NomeTrofeo VARCHAR(30) NOT NULL,
     Anno DATE NOT NULL,
 	
     CONSTRAINT TrofeoFK FOREIGN KEY (NomeTrofeo, Anno) REFERENCES Trofeo(NomeTrofeo, Anno));
 
 CREATE TABLE Dirige(
-SSN_Dirigente calcio.ssn_valido REFERENCES calcio.Dirigente(SSN) NOT NULL,
-NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
+SSN_Dirigente ssn_valido REFERENCES Dirigente(SSN) NOT NULL,
+NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL);
