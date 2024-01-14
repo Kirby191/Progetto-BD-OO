@@ -42,7 +42,7 @@ PRIMARY KEY (ID_Militanza),
 
 CONSTRAINT TipoMilitanzaorretto CHECK(TipoMilitanza ='M' or TipoMilitanza ='P'));
 
-CREATE TABLE calcio.Squadra(
+CREATE TABLE Squadra(
 Nome_Squadra VARCHAR(50) UNIQUE NOT NULL,
 Nazionalità VARCHAR(50) REFERENCES calcio.Nazione(Nome) NOT NULL,
 Data_Fondazione DATE NOT NULL,
