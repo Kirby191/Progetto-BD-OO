@@ -1,5 +1,5 @@
 -- Si fanno dopo per l'ordine in cui eseguiamo le CREATE TABLE.
-ALTER TABLE calcio.Militanza ADD COLUMN NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra),
-			     ADD COLUMN SSN calcio.ssn_valido REFERENCES calcio.Giocatore(SSN);
+ALTER TABLE Militanza ADD COLUMN NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra),
+			     ADD COLUMN SSN calcio.ssn_valido REFERENCES Giocatore(SSN);
 
-ALTER TABLE calcio.Squadra ADD COLUMN SSN_Allenatore calcio.ssn_valido REFERENCES calcio.Allenatore(SSN);
+ALTER TABLE Squadra ADD COLUMN SSN_Allenatore calcio.ssn_valido REFERENCES Allenatore(SSN);
