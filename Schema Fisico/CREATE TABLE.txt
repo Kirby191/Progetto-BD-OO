@@ -1,8 +1,8 @@
-CREATE TABLE calcio.Nazione(
+CREATE TABLE Nazione(
 Nome VARCHAR(50),
 PRIMARY KEY (Nome));
 
-CREATE TABLE calcio.Giocatore (
+CREATE TABLE Giocatore (
 Nome VARCHAR(50) NOT NULL,
 Cognome VARCHAR(50) NOT NULL,
 SSN calcio.ssn_valido NOT NULL,
@@ -26,7 +26,7 @@ CONSTRAINT TipoGiocatoreCorretto CHECK(TipoGiocatore= 'M' or TipoGiocatore= 'P')
 );
 
 
-CREATE TABLE calcio.Militanza(
+CREATE TABLE Militanza(
 ID_Militanza SERIAL NOT NULL,
 Data_Inizio DATE NOT NULL,
 Data_Fine DATE,
@@ -49,14 +49,14 @@ Data_Fondazione DATE NOT NULL,
 
 PRIMARY KEY (Nome_Squadra));
 
-CREATE TABLE calcio.Trofeo(
+CREATE TABLE Trofeo(
 NomeTrofeo VARCHAR(30) NOT NULL,
 Anno DATE NOT NULL,
 Squadra BOOLEAN NOT NULL,
 
 PRIMARY KEY (NomeTrofeo, Anno));
 
-CREATE TABLE calcio.Allenatore(
+CREATE TABLE Allenatore(
 Nome VARCHAR(50) NOT NULL,
 Cognome VARCHAR(50) NOT NULL,
 Sesso calcio.sesso_corretto NOT NULL,
@@ -70,7 +70,7 @@ CONSTRAINT SuperSSN FOREIGN KEY (SSN) REFERENCES Giocatore(SSN)
 ON UPDATE RESTRICT
 ON DELETE RESTRICT);
 
-CREATE TABLE calcio.Dirigente(
+CREATE TABLE Dirigente(
 Nome VARCHAR(50) NOT NULL,
 Cognome VARCHAR(50) NOT NULL,
 Sesso calcio.sesso_corretto NOT NULL,
@@ -81,31 +81,28 @@ FineD DATE,
 
 PRIMARY KEY (SSN));
 
-CREATE TABLE calcio.Riferisce(
+CREATE TABLE Riferisce(
 ID_Militanza SERIAL REFERENCES calcio.Militanza(ID_Militanza) UNIQUE NOT NULL,
 NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
 
-CREATE TABLE calcio.Vincere (
+CREATE TABLE Vincere (
     SSN calcio.ssn_valido REFERENCES calcio.Giocatore(SSN) NOT NULL,
     NomeTrofeo VARCHAR(30) NOT NULL,
     Anno DATE NOT NULL,
 	
     CONSTRAINT TrofeoFK FOREIGN KEY (NomeTrofeo, Anno) REFERENCES Trofeo(NomeTrofeo, Anno));
 
-CREATE TABLE calcio.Partecipa_In(
+CREATE TABLE Partecipa_In(
 SSN calcio.ssn_valido NOT NULL,
 NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
 
-CREATE TABLE calcio.Ottenuto_Da(
+CREATE TABLE Ottenuto_Da(
 NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL,
     NomeTrofeo VARCHAR(30) NOT NULL,
     Anno DATE NOT NULL,
 	
     CONSTRAINT TrofeoFK FOREIGN KEY (NomeTrofeo, Anno) REFERENCES Trofeo(NomeTrofeo, Anno));
 
-CREATE TABLE calcio.Dirige(
+CREATE TABLE Dirige(
 SSN_Dirigente calcio.ssn_valido REFERENCES calcio.Dirigente(SSN) NOT NULL,
 NomeSquadra VARCHAR(50) REFERENCES calcio.Squadra(Nome_Squadra) NOT NULL);
-
-
-

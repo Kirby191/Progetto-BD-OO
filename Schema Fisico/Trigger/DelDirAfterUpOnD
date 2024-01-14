@@ -14,4 +14,3 @@ CREATE TRIGGER del_dir_after_update_on_d
 AFTER UPDATE ON Dirigente
 FOR EACH ROW
 EXECUTE FUNCTION DelDirAfterUpOnD();
-
