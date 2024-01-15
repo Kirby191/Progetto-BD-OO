@@ -1,0 +1,20 @@
+//controllo che quando cambio l'allenatore che allena una squadra, il nuovo allenatore non si sia ritirato
+CREATE OR REPLACE FUNCTION CheckFineANotNullBefoeUpdate()
+RETURNS TRIGGER AS $$
+BEGIN
+	--ricerca dell'allenatore e controllo se ha finito la sua carriera da allenatore
+	IF ((SELECT FineA
+	    FROM Allenatore
+	    WHERE SSN = NEW.SSN_Allenatore) IS NOT NULL) THEN 
+		RAISE EXCEPTION 'L''allenatore inserito ha terminato la sua carriera, non può allenare la squadra';
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER check_fineA_notnull_bef_update
+BEFORE UPDATE ON Squadra
+WHEN NEW.SSN_Allenatore <> OLD.SSN_Allenatore
+FOR EACH ROW
+EXCECUTE FUNCTION CheckFineANotNullBefoeUpdate();
