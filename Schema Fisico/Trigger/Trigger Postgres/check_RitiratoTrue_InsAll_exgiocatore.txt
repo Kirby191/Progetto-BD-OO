@@ -1,0 +1,27 @@
+/*quando inseriamo un allenatore controlliamo se in passato è stato un giocatore, se era un giocatore controlliamo che nella tabella giocatore abbia l'attributo ritirato a TRUE, se non la tiene allora gliela inseriamo noi*/
+
+CREATE OR REPLACE FUNCTION ExGiocatoreA()
+RETURNS TRIGGER AS $$
+DECLARE
+	controllo_ritirato BOOLEAN;
+BEGIN
+	IF (EXISTS (SELECT *
+		    FROM Giocatore
+		    WHERE SSN = New.SSN)) THEN
+		SELECT Ritirato INTO controllo_ritirato
+		FROM Giocatore
+		WHERE SSN = New.SSN;
+		IF (controllo_ritirato = FALSE) THEN
+			UPDATE Giocatore 
+			SET Ritirato = TRUE
+			WHERE SSN = New.SSN;
+		END IF;
+	END IF;
+	RETURN NEW;
+END;
+$$ Language plpgsql;
+
+CREATE TRIGGER ex_giocatoreA
+AFTER INSERT ON Allenatore
+FOR EACH ROW
+EXECUTE ExGiocatoreA();
