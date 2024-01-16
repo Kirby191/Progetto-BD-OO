@@ -10,7 +10,7 @@ BEGIN
 	END IF;
 	RETURN NEW;
 END;
-$$ language plpgsql;
+$$ Language plpgsql;
 
 CREATE TRIGGER check_d_is_not_retired
 BEFORE INSERT ON Dirige
