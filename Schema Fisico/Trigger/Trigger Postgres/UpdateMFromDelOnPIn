@@ -1,0 +1,40 @@
+-- Se sto eliminando da partecipa_in, allora la militanza sta terminando.
+
+CREATE OR REPLACE FUNCTION UpdateMFromDelOnPIn()
+RETURNS TRIGGER AS $$
+DECLARE
+    Giocatore CURSOR FOR
+        SELECT *
+        FROM Militanza
+        WHERE NomeSquadra = OLD.NomeSquadra AND SSN = OLD.SSN
+        ORDER BY Data_Inizio DESC
+        LIMIT 1;
+    tmp Militanza%ROWTYPE;
+BEGIN
+    OPEN Giocatore;
+
+    FETCH Giocatore INTO tmp;
+
+    -- secondo la nostra logica, questo caso non può mai accadere
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Militanza non trovata!';
+    END IF;
+
+    IF tmp.Data_Fine IS NULL THEN
+        UPDATE Militanza
+        SET Data_Fine = CURRENT_DATE
+        WHERE ID_Militanza = tmp.ID_Militanza;
+    END IF;
+
+    CLOSE Giocatore;
+    
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Creazione del trigger separatamente dalla definizione della funzione
+CREATE TRIGGER UpdateMFromDelOnPIn
+BEFORE DELETE ON Partecipa_in
+FOR EACH ROW
+EXECUTE FUNCTION UpdateMFromDelOnPIn();
+
