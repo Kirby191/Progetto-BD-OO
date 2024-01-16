@@ -1,0 +1,29 @@
+//controllo che quando inserisco un giocatore in partecipa_in sia dello stesso sesso degli altri giocatori
+
+CREATE OR REPLACE FUNCTION CheckSexPInG()
+RETURNS TRIGGER AS $$
+DECLARE 
+	sex_in RECORD;
+	sex_squadra RECORD;
+	
+BEGIN 
+	SELECT Sesso INTO sex_in
+	FROM Giocatore
+	WHERE SSN = New.SSN;
+
+	SELECT Sesso INTO sex_squadra --in questo caso in sex_squadra andrà il sesso dell'ultima tupla che soddisfa la query
+	FROM Giocatore
+	WHERE SSN IN (SELECT SSN 
+		      FROM Partecipa_in
+		      WHERE SSN <> New.SSN AND NomeSquadra = New.NomeSquadra);
+	IF (sex_in <> sex_squadra) THEN
+		RAISE EXCEPTION 'Il giocatore inserito non è dello stesso sesso dei giocatori della squadra';
+	END IF;
+	RETURN NEW;
+END;
+$$ Language plpgsql;
+
+CREATE TRIGGER check_sex_pi_g
+AFTER INSERT ON Partecipa_in
+FOR EACH ROW
+EXECUTE CheckSexPInG();
