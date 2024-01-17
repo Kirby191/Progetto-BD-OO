@@ -3,27 +3,49 @@ RETURNS TRIGGER AS $$
 DECLARE
     isSquadra BOOLEAN;
     SquadraApp RECORD;
+    ControlloDate RECORD;
 BEGIN
     SELECT * INTO SquadraApp
     FROM Partecipa_in
     WHERE SSN = NEW.SSN;
     
-    SELECT TRUE INTO isSquadra
-    FROM Trofeo
-    WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno;
-    -- Se è vero che il trofeo è di squadra, controllo se esiste la situazione dove il trofeo è in ottenuto_da. Se ciò non fosse vero
-    -- allora sto tentando di inserire il trofeo ad un singolo giocatore, e non perchè il trofeo di squadra viene dato a tutti i giocatori.
-    IF isSquadra THEN 
-        IF NOT EXISTS (
-            SELECT 1
-            FROM Ottenuto_da
-            WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno AND NomeSquadra = SquadraApp.SSN
-        ) THEN
-            RAISE EXCEPTION 'Il Trofeo è di squadra. Impossibile assegnarlo al singolo giocatore';
-        END IF;
+    
+    IF SquadraApp IS NULL THEN
+    
+    	RAISE EXCEPTION 'Giocatore non partecipa a nessuna squadra, impossibile inserire';
+    	
     END IF;
-
-    RETURN NEW;
+    
+    SELECT * INTO ControlloDate
+    FROM Militanza
+    WHERE SSN = NEW.SSN AND NomeSquadra = SquadraApp.NomeSquadra;
+    
+	IF ControlloDate.Data_Inizio <= NEW.Anno THEN
+    
+	    SELECT Squadra INTO isSquadra
+	    FROM Trofeo
+	    WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno;
+	    
+	    -- Se è vero che il trofeo è di squadra, controllo se esiste la situazione dove il trofeo è in ottenuto_da. Se ciò non fosse vero
+	    -- allora sto tentando di inserire il trofeo ad un singolo giocatore, e non perchè il trofeo di squadra viene dato a tutti i giocatori.
+	    
+	    IF isSquadra THEN
+	     
+		IF NOT EXISTS (
+		    SELECT 1
+		    FROM Ottenuto_da
+		    WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno AND NomeSquadra = SquadraApp.NomeSquadra
+		) THEN
+		    RAISE EXCEPTION 'Il Trofeo è di squadra. Impossibile assegnarlo al singolo giocatore';
+		END IF;
+		
+	    END IF;
+	    
+	    RETURN NEW;
+	    
+	END IF;
+	
+    RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
 
