@@ -15,7 +15,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER controllo_upd_Data_Militanza_btw
-BEFORE INSERT ON Militanza
+BEFORE UPDATE ON Militanza
 FOR EACH ROW
-WHEN New.Data_Inizio <> Old.Data_Inizio
+WHEN (New.Data_Inizio <> Old.Data_Inizio OR New.Data_Fine <> OLD.Data_Fine)
 EXECUTE FUNCTION ControlloDataUpdMBtw();
