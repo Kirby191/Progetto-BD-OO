@@ -1,37 +1,18 @@
-CREATE OR REPLACE FUNCTION Storico_Giocatori_Squadra(Squadra SQUADRA.Nome_Squadra%TYPE)
-RETURNS TABLE(SSN_Giocatore GIOCATORE.SSN%TYPE)
+CREATE OR REPLACE FUNCTION Storico_Giocatori(SquadraInEsame TEXT)
+RETURNS TABLE(SSN_Giocatore ssn_valido)
 AS $$
-	DECLARE
-	-- Per convenzione gli ID_Militanza sono un autoincrement che continua ad incrementare
-	-- più militanze inseriamo. Di conseguenza, una Militanza sarà più "recente" di un'altra in base al suo valore
-	Cursor Militanze IS(
-	SELECT ID_Militanza
-	FROM Riferisce
-	WHERE NomeSquadra = Squadra
-	ORDER BY ID_Militanza ASC);
-	
-	Curr_Militanza MILITANZA.ID_Militanza%TYPE;
-	final_string TEXT;
 	
 		BEGIN
-			OPEN Militanze;
-	
-			LOOP
-	
-				FETCH Militanze INTO Curr_Militanza;		
-				EXIT WHEN Militanze%NotFound;
-			
-				SELECT DISTINCT SSN INTO Curr_SSN
-				FROM Militanza
-				WHERE ID_Militanza = Curr_Militanza;
+		
+			IF( NOT EXISTS ( SELECT *
+					 FROM Squadra
+					 WHERE Nome_Squadra = SquadraInEsame)) THEN 
 				
-				final_string := final_string || Curr_SSN || ' ';
+				RAISE EXCEPTION 'La squadra indicata non esiste';
 				
-			END LOOP;
-			
-			CLOSE Militanze;
-			
-			RETURN QUERY SELECT * FROM string_to_table(final_string, ' ');
-			
+			END IF;
+
+			RETURN QUERY SELECT DISTINCT SSN FROM Militanza WHERE NomeSquadra = SquadraInEsame;		
+		
 		END;
-$$ Language plpgsql
+$$ Language plpgsql;

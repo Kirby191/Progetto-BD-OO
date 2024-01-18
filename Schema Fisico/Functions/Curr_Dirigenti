@@ -1,9 +1,6 @@
 CREATE OR REPLACE FUNCTION Curr_Dirigenti(SquadraInEsame TEXT)
 RETURNS TABLE(SSN_Dirigente ssn_valido)
 AS $$
-	DECLARE
-	
-	Curr_Dirigente RECORD;
 	
 		BEGIN
 			IF( NOT EXISTS ( SELECT *

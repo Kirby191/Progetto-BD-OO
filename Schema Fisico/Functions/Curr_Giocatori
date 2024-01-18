@@ -1,9 +1,6 @@
 CREATE OR REPLACE FUNCTION Curr_Giocatori(SquadraInEsame TEXT)
 RETURNS TABLE(SSN_Giocatore ssn_valido)
 AS $$
-	DECLARE
-	
-	Curr_Giocatore RECORD;
 	
 		BEGIN
 
