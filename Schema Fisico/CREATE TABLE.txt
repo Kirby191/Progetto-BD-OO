@@ -94,7 +94,7 @@ CREATE TABLE Vincere (
     CONSTRAINT TrofeoFK FOREIGN KEY (NomeTrofeo, Anno) REFERENCES Trofeo(NomeTrofeo, Anno));
 
 CREATE TABLE Partecipa_In(
-SSN ssn_valido NOT NULL,
+SSN ssn_valido REFERENCES Giocatore(SSN) NOT NULL,
 NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL);
 
 CREATE TABLE Ottenuto_Da(
