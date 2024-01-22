@@ -13,3 +13,4 @@ CREATE DOMAIN ruoloDirigente AS VARCHAR(30)
                   'Medico sportivo', 'Mental coach', 'Fisioterapista', 'Osservatore', 
                   'Magazziniere') OR VALUE IS NULL);
 
+CREATE DOMAIN ruoli_ammessi AS VARCHAR(15) CHECK (VALUE IN ('Giocatore','Amministratore'));

@@ -107,3 +107,25 @@ NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL,
 CREATE TABLE Dirige(
 SSN_Dirigente ssn_valido REFERENCES Dirigente(SSN) NOT NULL,
 NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL);
+
+CREATE TABLE Credenziali(
+    Username VARCHAR(20) UNIQUE NOT NULL 
+        CHECK (LENGTH(Username) >= 8) 
+        CONSTRAINT lunghezza_username CHECK (LENGTH(Username) >= 8),
+    
+    Password VARCHAR(15) NOT NULL 
+        CHECK (
+            LENGTH(Password) >= 5 AND
+            Password ~ '[A-Z]' AND
+            Password ~ '[0-9]'
+        ) 
+        CONSTRAINT complessita_password CHECK (
+            LENGTH(Password) >= 5 AND
+            Password ~ '[A-Z]' AND
+            Password ~ '[0-9]'
+        ),
+    
+    Ruolo ruoli_ammessi NOT NULL,
+    SSN ssn_valido NOT NULL,
+    PRIMARY KEY(SSN)
+);
