@@ -3,3 +3,7 @@ ALTER TABLE Militanza ADD COLUMN NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome
 			     ADD COLUMN SSN ssn_valido REFERENCES Giocatore(SSN);
 
 ALTER TABLE Squadra ADD COLUMN SSN_Allenatore ssn_valido REFERENCES Allenatore(SSN);
+
+--Quando inseriamo un portiere come giocatore dobbiamo assicurarci che il suo ruolo sia P
+ALTER TABLE Giocatore 
+ADD CONSTRAINT tipo_giocatore_portiere CHECK ((Ruolo = 'Portiere' AND TipoGiocatore = 'P') OR (Ruolo <> 'Portiere'))
