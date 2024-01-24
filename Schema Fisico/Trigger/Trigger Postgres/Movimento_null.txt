@@ -1,0 +1,20 @@
+--controlliamo che quando inseriamo o modifichiamo la militanza di un giocatore modificando il numero di goal subiti se è maggiore di 0 allora dobbiamo assicurarci
+--che il giocatore sia un portiere
+CREATE OR REPLACE FUNCTION Movimento_null()
+RETURNS TRIGGER AS $$
+BEGIN
+	IF(SELECT TipoGiocatore
+	   FROM Giocatore
+	   WHERE SSN = New.SSN) = 'M' THEN
+		RAISE EXCEPTION 'Un giocatore di movimento non può avere gol subiti';
+	ENDIF;
+	RETURN NEW;
+END;
+$$ Language plpgsql;
+
+
+CREATE TRIGGER movimento_null
+BEFORE INSERT OR UPDATE Militanza
+FOR EACH ROW
+WHERE (New.GoalSubiti > 0)
+EXECUTE FUNCTION Movimento_null();
