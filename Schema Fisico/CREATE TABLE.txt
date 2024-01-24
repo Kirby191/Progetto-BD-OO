@@ -13,7 +13,7 @@ Piede CHARACTER(1) NOT NULL,
 Altezza NUMERIC(3,0) NOT NULL,
 Peso NUMERIC(4,0) NOT NULL,
 Ruoli RuoloType NOT NULL,
-Ritirato BOOLEAN NOT NULL,
+Ritirato BOOLEAN NOT NULL DEFAULT FALSE,
 Abilità VARCHAR(50) NOT NULL,
 TipoGiocatore CHARACTER(1) NOT NULL,
 
@@ -23,6 +23,7 @@ CONSTRAINT AltezzaCorretta CHECK(Altezza > 1.50),
 CONSTRAINT PesoCorretto CHECK(Peso > 40.00),
 CONSTRAINT PiedeCorretto CHECK(Piede = 'D' or Piede = 'S'),
 CONSTRAINT TipoGiocatoreCorretto CHECK(TipoGiocatore= 'M' or TipoGiocatore= 'P')
+CONSTRAINT tipo_giocatore_corretto CHECK ((Ruolo = 'Portiere' AND TipoGiocatore = 'P') OR (Ruolo <> 'Portiere' AND TipoGiocatore = 'M'))
 );
 
 
@@ -30,12 +31,12 @@ CREATE TABLE Militanza(
 ID_Militanza SERIAL NOT NULL,
 Data_Inizio DATE NOT NULL,
 Data_Fine DATE,
-PartiteGiocate intero_non_negativo NOT NULL,
-GoalSegnati intero_non_negativo NOT NULL,
-GoalSubiti intero_non_negativo NOT NULL,
-CartelliniGialli intero_non_negativo NOT NULL,
-CartelliniRossi intero_non_negativo NOT NULL,
-Assist intero_non_negativo NOT NULL,
+PartiteGiocate intero_non_negativo NOT NULL DEFAULT 0,
+GoalSegnati intero_non_negativo NOT NULL DEFAULT 0,
+GoalSubiti intero_non_negativo NOT NULL DEFAULT 0,
+CartelliniGialli intero_non_negativo NOT NULL DEFAULT 0,
+CartelliniRossi intero_non_negativo NOT NULL DEFAULT 0,
+Assist intero_non_negativo NOT NULL DEFAULT 0,
 TipoMilitanza CHAR(1) NOT NULL,
 
 PRIMARY KEY (ID_Militanza),
@@ -53,7 +54,7 @@ PRIMARY KEY (Nome_Squadra));
 CREATE TABLE Trofeo(
 NomeTrofeo VARCHAR(30) NOT NULL,
 Anno DATE NOT NULL,
-Squadra BOOLEAN NOT NULL,
+Squadra BOOLEAN NOT NULL DEFAULT FALSE,
 
 PRIMARY KEY (NomeTrofeo, Anno));
 
@@ -67,9 +68,7 @@ FineA DATE,
 
 PRIMARY KEY (SSN),
 
-CONSTRAINT SuperSSN FOREIGN KEY (SSN) REFERENCES Giocatore(SSN)
-ON UPDATE RESTRICT
-ON DELETE RESTRICT);
+CONSTRAINT contr_data CHECK (InizioA < FineA));
 
 CREATE TABLE Dirigente(
 Nome VARCHAR(50) NOT NULL,
@@ -80,7 +79,9 @@ RuoloDirigente ruoloDirigente NOT NULL,
 InizioD DATE NOT NULL,
 FineD DATE,
 
-PRIMARY KEY (SSN));
+PRIMARY KEY (SSN)
+
+CONSTRAINT contr_data CHECK (InizioD < FineD));
 
 CREATE TABLE Riferisce(
 ID_Militanza SERIAL REFERENCES Militanza(ID_Militanza) UNIQUE NOT NULL,
@@ -110,8 +111,8 @@ NomeSquadra VARCHAR(50) REFERENCES Squadra(Nome_Squadra) NOT NULL);
 
 CREATE TABLE Credenziali(
     Username VARCHAR(20) UNIQUE NOT NULL 
-        CHECK (LENGTH(Username) >= 8) 
-        CONSTRAINT lunghezza_username CHECK (LENGTH(Username) >= 8),
+        CHECK (LENGTH(Username) >= 6) 
+        CONSTRAINT lunghezza_username CHECK (LENGTH(Username) >= 6),
     
     Password VARCHAR(15) NOT NULL 
         CHECK (

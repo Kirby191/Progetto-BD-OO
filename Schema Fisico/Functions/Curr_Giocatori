@@ -15,4 +15,4 @@ AS $$
 			RETURN QUERY SELECT SSN FROM Partecipa_In WHERE Squadra = SquadraInEsame;
 			
 		END;
-$$ Language plpgsql
+$$ Language plpgsql;
