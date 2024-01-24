@@ -1,6 +1,3 @@
-//prima di inserire una tupla in dirige dobbiamo controllare che il dirigente non si sia ritirato
-// Vittorio: Funziona, se ho modificato è solamente perchè nella exception volevo dirigente con la D maiuscola <3
-
 CREATE OR REPLACE FUNCTION CheckDIsNotRetired()
 RETURNS TRIGGER AS $$
 BEGIN 
