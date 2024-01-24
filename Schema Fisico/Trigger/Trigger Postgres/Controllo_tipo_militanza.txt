@@ -1,4 +1,4 @@
---quando inserisco una tupla in militanza devo controllare che se il giocatore è un portiere allora il tipo di Militanza deve essere uguale a P,altrimenti deve essere M
+--quando inserisco o faccio update di una tupla in militanza devo controllare che se il giocatore è un portiere allora il tipo di Militanza deve essere uguale a P,altrimenti deve essere M
 CREATE OR REPLACE FUNCTION Controllo_tipo_militanza()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -6,20 +6,18 @@ BEGIN
 	   FROM Giocatore
 	   WHERE SSN = New.SSN) = 'M' THEN --Si attiva se il giocatore è di movimento
 		IF New.TipoMilitanza <> 'M' THEN 
-			RAISE EXCEPTION 'Il tipo di Militanza è incoerente con il tipo di giocatore';
+			RAISE EXCEPTION 'Il TipoMilitanza = P ma TipoGiocatore = M';
 		END IF;
-	ELSIF (SELECT TipoGiocatore
-	       FROM Giocatore
-	       WHERE SSN = New.SSN) = 'P' THEN --Si attiva se il giocatore è un portiere
+	ELSE --Si attiva se il giocatore è un portiere
 		IF New.TipoMilitanza <> 'P' THEN 
-			RAISE EXCEPTION 'Il tipo di Militanza è incoerente con il tipo di giocatore';
-		ENDIF;
+			RAISE EXCEPTION 'Il TipoMilitanza = M ma TipoGiocatore = P';
+		END IF;
 	END IF;
 	RETURN NEW;
 END;
 $$ Language plpgsql;
 
 CREATE TRIGGER controllo_tipo_militanza
-BEFORE INSERT ON Militanza
+BEFORE INSERT OR UPDATE ON Militanza
 FOR EACH ROW
 EXECUTE FUNCTION Controllo_tipo_militanza();

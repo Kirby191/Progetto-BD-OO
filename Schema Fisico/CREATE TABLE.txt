@@ -42,7 +42,8 @@ TipoMilitanza CHAR(1) NOT NULL,
 PRIMARY KEY (ID_Militanza),
 
 CONSTRAINT TipoMilitanzacorretto CHECK(TipoMilitanza ='M' or TipoMilitanza ='P')
-CONSTRAINT contr_data CHECK (Data_Inizio < Data_Fine));
+CONSTRAINT contr_data CHECK (Data_Inizio < Data_Fine)
+CONSTRAINT correttoGoal_Subiti CHECK ((Goal_Subiti = 0 AND TipoMilitanza = 'M') OR (Goal_Subiti >= 0 AND TipoMilitanza = 'P'));
 
 CREATE TABLE Squadra(
 Nome_Squadra VARCHAR(50) UNIQUE NOT NULL,
