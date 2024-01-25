@@ -1,0 +1,1 @@
+-- Partecipa_In viene popolata in maniera dinamica a seconda di cosa inseriamo, eliminiamo, o modifichiamo in _Militanza_. Pertanto, non c'è nell'insert into.
