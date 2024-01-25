@@ -10,7 +10,7 @@
 + Nel nostro
 
 ### Gestione Attributi Multivalore
-+ Gli attributi multivalore che possiamo avere nel nostro UML sono _Abilità_ e _Ruolo_ presenti nella classe __Giocatore__. Per gestire questi attributi, abbiamo deciso di trattarli come un singolo attributo. Essi formeranno una stringa per _Ruolo_(Ruoli) ed una per _Abilità_ composta da tutti gli attributi loro attribuiti, separati da una virgola.
++ L'attributo multivalore che abbiamo nel nostro UML è _Abilità_ presente nella classe __Giocatore__. Per gestire questo attributo, abbiamo deciso di trattarlo come un singolo attributo. Esso formerà una stringa per _Abilità_ composta da tutti gli attributi loro attribuiti, separati da una virgola.
 
 ### Gestione Attributi Composti
 + Non sono presenti attributi composti.
