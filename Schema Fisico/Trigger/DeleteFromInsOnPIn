@@ -20,7 +20,7 @@ BEGIN
     END IF;
 
     IF Giocatore.Data_Fine IS NOT NULL THEN
-        RAISE EXCEPTION 'Il Giocatore ha terminato la sua militanza nella Squadra';
+        RAISE EXCEPTION 'Giocatore % ha terminato la sua militanza nella Squadra %.', NEW.SSN, NEW.NomeSquadra;
     END IF;
 
     RETURN NEW;

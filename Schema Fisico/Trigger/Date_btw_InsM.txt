@@ -8,7 +8,7 @@ BEGIN
 		WHERE New.SSN = SSN
 		  AND New.Data_Inizio BETWEEN Data_Inizio AND Data_Fine
 	) THEN
-		RAISE EXCEPTION 'La militanza non può essere inserita perché il giocatore in quella data ha già un''altra militanza';
+		RAISE EXCEPTION 'La militanza % non può essere inserita. Il giocatore % in quella data ha già un''altra militanza', NEW.ID_Militanza, NEW.SSN;
 	END IF;
 	RETURN NEW;
 END;

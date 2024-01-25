@@ -13,7 +13,7 @@ BEGIN
     WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno;
 
     IF Controllo.Squadra IS NULL THEN
-        RAISE EXCEPTION 'Il trofeo non è di squadra, impossibile inserire';
+        RAISE EXCEPTION 'Trofeo % non di squadra, impossibile inserire', NEW.NomeTrofeo;
     END IF;
 
     OPEN Giocatore;

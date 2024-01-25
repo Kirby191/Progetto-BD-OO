@@ -20,7 +20,7 @@ BEGIN
     );
 
     IF sex_in <> sex_squadra THEN
-        RAISE EXCEPTION 'Il giocatore inserito non è dello stesso sesso dei giocatori della squadra';
+        RAISE EXCEPTION 'Giocatore % non è dello stesso sesso dei giocatori della squadra(%)', NEW.SSN, sex_squadra;
     END IF;
 
     RETURN NEW;

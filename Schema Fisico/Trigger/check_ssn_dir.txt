@@ -1,11 +1,11 @@
 --controllo che quando si inserisce un dirigente non abbia lo stesso ssn di un allenatore
-CREATE OR REPLACE FUNCTION Check_ssn_Dir
+CREATE OR REPLACE FUNCTION Check_ssn_Dir()
 RETURNS TRIGGER AS $$
 BEGIN 
 	IF EXISTS(SELECT 1
 		  FROM Allenatore 
 		  WHERE SSN = New.SSN) THEN
-		RAISE EXCEPTION 'Non puoi aggiungere un allenatore che ha lo stesso SSN di un dirigente';
+		RAISE EXCEPTION 'Dirigente % presente in Allenatore!', NEW.SSN;
 	END IF;
 	RETURN NEW;
 END;

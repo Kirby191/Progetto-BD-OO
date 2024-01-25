@@ -6,11 +6,11 @@ BEGIN
 	   FROM Giocatore
 	   WHERE SSN = New.SSN) = 'M' THEN --Si attiva se il giocatore è di movimento
 		IF New.TipoMilitanza <> 'M' THEN 
-			RAISE EXCEPTION 'Il TipoMilitanza = P ma TipoGiocatore = M';
+			RAISE EXCEPTION 'Giocatore % ha TipoMilitanza = P ma TipoGiocatore = M', NEW.SSN;
 		END IF;
 	ELSE --Si attiva se il giocatore è un portiere
 		IF New.TipoMilitanza <> 'P' THEN 
-			RAISE EXCEPTION 'Il TipoMilitanza = M ma TipoGiocatore = P';
+			RAISE EXCEPTION 'Giocatore % ha TipoMilitanza = M ma TipoGiocatore = P', NEW.SSN;
 		END IF;
 	END IF;
 	RETURN NEW;

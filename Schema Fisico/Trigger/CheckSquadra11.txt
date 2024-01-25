@@ -9,7 +9,7 @@ BEGIN
 
     IF(Count < 11) THEN
 
-	RAISE EXCEPTION 'I giocatori devono essere almeno 11 nella squadra!';
+	RAISE EXCEPTION 'I giocatori devono essere almeno 11 nella squadra %', NEW.NomeSquadra;
 
     END IF;
 	

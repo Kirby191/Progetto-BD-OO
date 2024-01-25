@@ -14,7 +14,7 @@ BEGIN
 
     IF Controllo IS NOT NULL THEN
         IF Controllo.Nome <> NEW.Nome OR Controllo.Cognome <> NEW.Cognome OR Controllo.Sesso <> NEW.Sesso THEN
-            RAISE EXCEPTION 'I dati non coincidono! Si prega di inserire i valori corretti.';
+            RAISE EXCEPTION 'I dati inseriti ad SSN % non coincidono con quelli nella relazione Giocatore! Si prega di inserire i valori corretti.', NEW.SSN;
         END IF;
 
         UPDATE Giocatore

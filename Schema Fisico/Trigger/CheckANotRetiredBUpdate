@@ -8,11 +8,11 @@ BEGIN
 	WHERE SSN = NEW.SSN_Allenatore;
 	
 	IF FOUND AND Controllo.FineA IS NOT NULL THEN
-		RAISE EXCEPTION 'Allenatore inserito ha terminato la sua carriera, non può allenare la squadra';
+		RAISE EXCEPTION 'Allenatore % ha terminato la sua carriera, non può allenare la squadra', NEW.SSN_Allenatore;
 	END IF;
 	
 	IF NOT FOUND THEN
-		RAISE EXCEPTION 'Si sta provando ad inserire SSN_Allenatore inesistente!';
+		RAISE EXCEPTION 'Si sta provando ad inserire SSN_Allenatore inesistente: %', NEW.SSN_Allenatore;
 	END IF;
 
 	RETURN NEW;

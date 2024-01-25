@@ -12,7 +12,7 @@ BEGIN
 	END IF;
 	
 	IF Controllo IS NOT NULL AND NEW.Ruolo = 'Amministratore' THEN
-		RAISE EXCEPTION 'Un amministratore non può essere anche un Giocatore';
+		RAISE EXCEPTION 'Amministratore % non può essere anche un Giocatore', NEW.SSN;
 	END IF;
 
 	RETURN NEW;

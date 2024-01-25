@@ -2,11 +2,11 @@ CREATE OR REPLACE FUNCTION DeletePInFromUpdateOnM()
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.NomeSquadra <> OLD.NomeSquadra OR NEW.SSN <> OLD.SSN THEN
-        RAISE EXCEPTION 'Impossibile eseguire la richiesta. Inserire una nuova riga con i dati corretti per il giocatore';
+        RAISE EXCEPTION 'Impossibile eseguire la richiesta. Inserire una nuova riga con i dati corretti per il giocatore %', OLD.SSN;
     END IF;
 
     IF NEW.Data_Fine IS NULL AND OLD.Data_Fine IS NOT NULL THEN
-        RAISE EXCEPTION 'Non è possibile annullare la fine di una militanza una volta inserita';
+        RAISE EXCEPTION 'Non è possibile annullare la fine di militanza % una volta inserita', NEW.ID_Militanza;
     END IF;
 
     IF NEW.Data_Fine IS NOT NULL THEN

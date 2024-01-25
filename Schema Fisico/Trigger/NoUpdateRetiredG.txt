@@ -3,7 +3,7 @@ RETURNS TRIGGER AS $$
 BEGIN
 	IF (OLD.Ritirato) THEN
 	
-		RAISE EXCEPTION 'Impossibile eseguire la modifica. Il Giocatore si è ritirato!';
+		RAISE EXCEPTION 'Impossibile eseguire la modifica. Giocatore % ritirato!', NEW.SSN;
 
 	END IF;
     RETURN NEW;

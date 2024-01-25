@@ -5,7 +5,7 @@ BEGIN
 	IF ((SELECT Data_Fine
 	    FROM Militanza
 	    WHERE ID_Militanza = New.ID_Militanza) IS NOT NULL) THEN
-		RAISE EXCEPTION 'Non si può modificare una militanza che è terminata';
+		RAISE EXCEPTION 'Non si può modificare militanza %. Terminata.', NEW.ID_Militanza;
 	END IF;
 	RETURN NEW;
 END;
@@ -13,6 +13,6 @@ $$ Language plpgsql;
 
 
 CREATE TRIGGER militanza_finita
-BEFORE UPDATE OF Partite_Giocate, Goal_Seganti, Goal_Subiti, Cartellini_Gialli, Cartellini_Rossi, Assist ON Militanza
+BEFORE UPDATE OF PartiteGiocate, GoalSegnati, GoalSubiti, CartelliniGialli, CartelliniRossi, Assist ON Militanza
 FOR EACH ROW 
-EXECUTE FUNCTION militanza_finitaUpd()
+EXECUTE FUNCTION militanza_finitaUpd(); 

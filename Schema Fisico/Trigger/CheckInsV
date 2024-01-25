@@ -12,7 +12,7 @@ BEGIN
     
     IF SquadraApp IS NULL THEN
     
-    	RAISE EXCEPTION 'Giocatore non partecipa a nessuna squadra, impossibile inserire';
+    	RAISE EXCEPTION 'Giocatore % non partecipa a nessuna squadra, impossibile inserire', NEW.SSN;
     	
     END IF;
     
@@ -36,7 +36,7 @@ BEGIN
 		    FROM Ottenuto_da
 		    WHERE NomeTrofeo = NEW.NomeTrofeo AND Anno = NEW.Anno AND NomeSquadra = SquadraApp.NomeSquadra
 		) THEN
-		    RAISE EXCEPTION 'Il Trofeo è di squadra. Impossibile assegnarlo al singolo giocatore';
+		    RAISE EXCEPTION 'Trofeo % di squadra. Impossibile assegnarlo al singolo giocatore', NEW.NomeTrofeo;
 		END IF;
 		
 	    END IF;
