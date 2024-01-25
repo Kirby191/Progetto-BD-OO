@@ -237,3 +237,82 @@ INSERT INTO nazioni (Nome) VALUES
 ('Zambia'),
 ('Zimbabwe');
 
+
+INSERT INTO Giocatore (Nome, Cognome, SSN, Nazionalita, DataDiNascita, Sesso, Piede, Altezza, Peso, Ruolo, Ritirato, Abilita, TipoGiocatore)
+VALUES 
+  ('Mario', 'Rossi', '124-456-789', 'Italia', '1990-01-01', 'M', 'D', 180, 75, 'Portiere', FALSE, 'Eccellente', 'P'),
+  ('Luca', 'Bianchi', '214-567-890', 'Spagna', '1985-05-15', 'M', 'S', 175, 70, 'CentrocampistaCentrale', FALSE, 'Buona', 'M'),
+  ('Giulia', 'Verdi', '345-678-901', 'Francia', '1995-08-20', 'F', 'D', 165, 60, 'TerzinoSinistro', FALSE, 'Eccellente', 'M'),
+  ('Marco', 'Neri', '416-789-012', 'Germania', '1988-12-10', 'M', 'S', 185, 80, 'DifensoreCentrale', FALSE, 'Ottima', 'M'),
+  ('Laura', 'Gialli', '527-890-123', 'Brasile', '1992-04-25', 'F', 'D', 170, 65, 'CentrocampistaOffensivo', FALSE, 'Buona', 'M'),
+  ('Giovanni', 'Rosa', '678-901-234', 'Argentina', '1980-06-05', 'M', 'S', 190, 85, 'AlaDestra', FALSE, 'Media', 'M'),
+  ('Chiara', 'Azzurri', '789-012-345', 'Inghilterra', '1998-11-30', 'F', 'D', 160, 55, 'AlaSinistra', FALSE, 'Eccellente', 'M'),
+  ('Paolo', 'Viola', '890-123-456', 'Olanda', '1982-09-15', 'M', 'S', 177, 72, 'EsternoDestro', FALSE, 'Ottima', 'M'),
+  ('Francesca', 'Marrone', '901-234-567', 'Portogallo', '1993-03-01', 'F', 'D', 168, 58, 'Trequartista', FALSE, 'Buona', 'M'),
+  ('Alessio', 'Arancio', '012-345-678', 'Belgio', '1987-07-12', 'M', 'S', 180, 77, 'Punta', FALSE, 'Eccellente', 'M'),
+  ('Fabio', 'Verde', '125-456-789', 'Spagna', '1991-02-28', 'M', 'D', 175, 70, 'CentrocampistaDifensivo', FALSE, 'Buona', 'M'),
+  ('Martina', 'Giallo', '234-567-890', 'Argentina', '1986-10-18', 'F', 'S', 160, 55, 'EsternoSinistro', FALSE, 'Ottima', 'M'),
+  ('Roberto', 'Blu', '315-678-901', 'Olanda', '1994-07-08', 'M', 'D', 185, 78, 'DifensoreCentrale', FALSE, 'Buona', 'M'),
+  ('Elisa', 'Rossa', '456-789-012', 'Italia', '1983-09-22', 'F', 'S', 165, 60, 'AlaDestra', FALSE, 'Media', 'M'),
+  ('Davide', 'Nero', '567-890-123', 'Francia', '1997-05-05', 'M', 'D', 170, 68, 'CentrocampistaCentrale', FALSE, 'Ottima', 'M');
+
+
+INSERT INTO Allenatore (Nome, Cognome, Sesso, SSN, InizioA, FineA)
+VALUES 
+('Mario', 'Rossi', 'M', '123-456-789', '2022-01-01', 'NULL'),
+('Laura', 'Bianchi', 'F', '987-654-321', '2021-05-01', 'NULL'),
+('Luigi', 'Verdi', 'M', '111-222-333', '2023-03-15', NULL),
+('Louis','Manna', 'M','555-666-777','2001-02-01', NULL);
+
+INSERT INTO Squadra (Nome_Squadra, Nazionalità, Data_Fondazione, SSN_Allenatore)
+VALUES 
+  ('Juventus', 'Italia', '1897-11-01', '123-456-789'),
+  ('Real Madrid', 'Spagna', '1902-03-06', '111-222-333'),
+  ('Liverpool', 'Inghilterra', '1892-06-03', '987-654-321'),
+  ('Bayern Monaco', 'Germania', '1900-02-27', '555-666-777');
+
+INSERT INTO Militanza (Data_Inizio, Data_Fine, PartiteGiocate, GoalSegnati, GoalSubiti, CartelliniGialli, CartelliniRossi, Assist, TipoMilitanza, NomeSquadra, SSN)
+VALUES 
+  ('2010-01-01', NULL, 30, 5, 120, 2, 0, 8, 'P', 'Juventus', '124-456-789'),
+  ('2005-06-01', NULL, 100, 20, 0, 10, 1, 15, 'M', 'Juventus', '214-567-890'),
+  ('2015-03-10', NULL, 50, 15, 0, 5, 0, 10, 'M', 'Juventus', '345-678-901'),
+  ('2000-07-15', NULL, 80, 10, 0, 4, 0, 12, 'M', 'Juventus', '416-789-012'),
+  ('2018-01-01', NULL, 40, 8, 0, 3, 1, 6, 'M', 'Juventus', '527-890-123'),
+  ('2002-05-20', NULL, 120, 25, 0, 8, 2, 20, 'M', 'Juventus', '678-901-234'),
+  ('2019-11-30', NULL, 60, 12, 0, 5, 0, 14, 'M', 'Juventus', '789-012-345'),
+  ('2006-03-15', NULL, 90, 18, 0, 7, 1, 16, 'M', 'Juventus', '890-123-456'),
+  ('2013-01-01', NULL, 45, 10, 0, 4, 0, 10, 'M', 'Juventus', '901-234-567'),
+  ('2008-07-12', NULL, 110, 22, 0, 10, 2, 18, 'M', 'Juventus', '012-345-678'),
+  ('2014-03-01', NULL, 55, 13, 0, 6, 1, 12, 'M', 'Juventus', '125-456-789'),
+  ('2007-09-15', '2012-09-15', 95, 16,0, 7, 1, 14, 'M', 'Liverpool', '234-567-890'),
+  ('2016-07-08', '2020-07-08', 70, 14, 0, 5, 0, 16, 'M', 'Bayern Monaco', '315-678-901'),
+  ('2009-09-22', '2014-09-22', 85, 15, 0, 8, 1, 12, 'M', 'Real Madrid', '456-789-012'),
+  ('2016-05-05', '2022-05-05', 50, 10, 0, 4, 0, 10, 'M', 'Juventus', '567-890-123');
+
+INSERT INTO Trofeo (NomeTrofeo, Anno, Squadra)
+VALUES 
+  ('Coppa Italia', '2020-01-01', TRUE),
+  ('Premier League', '2021-01-01', FALSE),
+  ('Champions League', '2019-01-01', TRUE),
+  ('Supercoppa Europea', '2022-01-01', FALSE),
+  ('Coppa del Mondo', '2018-01-01', TRUE);
+
+INSERT INTO Dirigente (Nome, Cognome, Sesso, SSN, RuoloDirigente, InizioD, FineD)
+VALUES 
+  ('Giovanni', 'Bianchi', 'M', '123-456-789', 'Presidente', '2020-01-01', NULL),
+  ('Maria', 'Rossi', 'F', '234-567-890', 'Dirigente sportivo', '2018-05-15', '2023-05-15'),
+  ('Luca', 'Verdi', 'M', '345-678-901', 'Preparatore atletico', '2021-03-01', '2024-03-01');
+
+INSERT INTO Vincere (SSN, NomeTrofeo, Anno)
+VALUES 
+  ('124-456-789', 'Coppa Italia', '2020-01-01'),
+  ('214-567-890', 'Supercoppa Europea', '2022-01-01');
+
+INSERT INTO Ottenuto_Da VALUES ('Juventus', 'Scudetto', '2001-01-01');
+
+INSERT INTO Dirige VALUES ('123-456-789','Juventus');
+
+INSERT INTO Credenziali VALUES
+('LuigiM', 'Blsmz!0m', 'Giocatore','214-567-890'),
+('ChiaraAzz','Malboro01','Giocatore','789-012-345'),
+('Admin','Admin0','Amministratore','000-111-000');

@@ -19,7 +19,7 @@ BEGIN
     WHERE SSN = NEW.SSN;
 
     IF Rit THEN
-        RAISE EXCEPTION 'Il Giocatore è ritirato, impossibile inserire la Militanza';
+        RAISE EXCEPTION 'Il Giocatore % ritirato, impossibile inserire la Militanza', NEW.SSN;
     END IF;
 
     IF NEW.Data_Fine IS NULL THEN
@@ -32,7 +32,7 @@ BEGIN
             INSERT INTO Partecipa_in(SSN, NomeSquadra) VALUES (NEW.SSN, NEW.NomeSquadra);
         ELSE
             CLOSE NoDouble;
-            RAISE EXCEPTION 'Militanza già in corso per il giocatore che è stato inserito.';
+            RAISE EXCEPTION 'Militanza già in corso per il giocatore % che è stato inserito.', NEW.SSN;
         END IF;
     END IF;
 

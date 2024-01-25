@@ -4,7 +4,7 @@ BEGIN
 	IF((SELECT FineD
 	    FROM Dirigente
 	    WHERE SSN = New.SSN_Dirigente) IS NOT NULL) THEN 
-		RAISE EXCEPTION 'Il Dirigente non può essere inserito perchè si è ritirato';
+		RAISE EXCEPTION 'Il Dirigente % non può essere inserito perchè si è ritirato', NEW.SSN_Dirigente;
 	END IF;
 	RETURN NEW;
 END;
