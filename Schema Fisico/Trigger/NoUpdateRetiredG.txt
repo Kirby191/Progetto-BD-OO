@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION NoUpdateRetiredG()
+RETURNS TRIGGER AS $$
+BEGIN
+	IF (OLD.Ritirato) THEN
+	
+		RAISE EXCEPTION 'Impossibile eseguire la modifica. Il Giocatore si è ritirato!';
+
+	END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER NoUpdateRetiredG
+BEFORE UPDATE ON Giocatore
+FOR EACH ROW
+WHEN (NEW.Ritirato = FALSE)
+EXECUTE FUNCTION NoUpdateRetiredG();
