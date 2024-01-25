@@ -1,0 +1,23 @@
+--un trofeo che compare più volte nella tabella trofeo deve sempre essere o di squadra o individuale
+CREATE OR REPLACE FUNCTION Controllo_coerenza_trofeo()
+RETURNS TRIGGER AS $$
+BEGIN
+	--controllo prima l'esistenza del trofeo stesso nella tabella
+	IF EXISTS(SELECT *
+		  FROM Trofeo
+		  WHERE NomeTrofeo = New.NomeTrofeo) THEN
+		IF (SELECT Squadra
+		    FROM Trofeo
+		    WHERE NomeTrofeo = New.NomeTrofeo
+		    LIMIT 1) <> New.Squadra THEN 
+			RAISE EXCEPTION 'Il trofeo inserito non è del tipo giusto';
+		END IF;
+	END IF;
+	RETURN NEW;
+END;
+$$ Language plpgsql;
+
+CREATE TRIGGER controllo_coerenza_trofeo
+BEFORE INSERT ON Trofeo
+FOR EACH ROW
+EXECUTE FUNCTION Controllo_coerenza_trofeo();
