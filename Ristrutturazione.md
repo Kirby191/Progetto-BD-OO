@@ -7,7 +7,6 @@
 
 ### Analisi delle Ridondanze
 + Ridondanze Possibili di _Nome_, _Cognome_, _SSN_ di un __Giocatore__ in __Allenatore__ e __Dirigente__, queste ridondanze sono fondamentali perchè se un Giocatore diventa Allenatore o Dirigente ci colleghiamo alla classe Giocatore per ricordare parte delle sue informazioni in quanto la tupla che si riferiva a quel Giocatore non viene eliminata, ma viene impostato _Ritirato_ a __TRUE__
-+ Nel nostro
 
 ### Gestione Attributi Multivalore
 + L'attributo multivalore che abbiamo nel nostro UML è _Abilità_ presente nella classe __Giocatore__. Per gestire questo attributo, abbiamo deciso di trattarlo come un singolo attributo. Esso formerà una stringa per _Abilità_ composta da tutti gli attributi loro attribuiti, separati da una virgola.
