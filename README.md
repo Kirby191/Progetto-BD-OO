@@ -56,3 +56,12 @@
 - Check_ssn_dir: Un Dirigente non può essere anche un Allenatore.
 
 - Controllo_coerenza_trofeo: Se all'inserimento di un trofeo ne trovo un altro con lo stesso nome, ma attributo Squadra diverso, EXCEPTION. Il trofeo deve essere coerente. L'unica cosa che cambia è l'anno.
+
+## Spiegazione Funzioni
+- Carriera_Giocatore: Estraggo i dati totali della carriera di un giocatore, dal suo inizio alla sua fine. Se possiede una militanza con data_fine NULL allora la carriera è ancora in corso
+
+- Curr_Dirigenti: Estrae i Dirigenti che dirigono una squadra in tempo reale dato un nome squadra in input.
+
+- Curr_Giocatori: Estrae i Giocatori partecipanti ad una squadra in tempo reale dato un nome squadra in input.
+
+- Storico_Giocatori_Squadra: Due funzioni diverse che eseguono lo stesso compito ma all'inverso. Dato un Giocatore estraggo le Squadre a cui ha partecipato dall'inizio della sua carriera al CURRENT_DATE(Se la carriera è ancora in corso). Data una Squadra estraggo tutti i Giocatori che hanno partecipato a quella squadra dalla sua data_fondazione.
