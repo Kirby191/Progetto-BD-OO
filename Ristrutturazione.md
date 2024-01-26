@@ -1,5 +1,6 @@
 # Ristrutturazione
-![UML ristrutturato 4](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/3174a331-d40b-4252-b9a8-01b439c0dc25)
+![UMLRistrutturato_finale](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/13e63e1c-0773-488c-bd27-dc862a28c355)
+
 
 
 
