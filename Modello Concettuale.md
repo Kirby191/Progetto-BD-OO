@@ -81,3 +81,9 @@ Per Vittorio invece, se un trofeo viene ottenuto da una squadra, si lancia un tr
 ![Undicesima bozza UML](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/a757a8ff-ff7a-4494-9849-9ad45e285640)
 
 + Invertita cardinalità tra Giocatore e Militanza, era errata.
+
+# Dodicesima Bozza UML
+![UML_non_ristrutturatoAggiustato](https://github.com/Kirby191/Progetto-BD-OO/assets/19607112/e398abf1-f48e-4fc7-b133-699c024ed5c4)
+
+
++ Rimosso Ruolo come attributo multivalore
